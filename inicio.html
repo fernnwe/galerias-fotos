@@ -5,24 +5,60 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Galería Premium</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    window.onload = () => {
-      if (localStorage.getItem("autenticado") !== "true") {
-        alert("Acceso no autorizado.");
-        window.location.href = "index.html";
-      }
-    };
-
-    function logout() {
-      localStorage.removeItem("autenticado");
-      window.location.href = "index.html";
+  <style>
+    /* Estilo para el modal (background oscurecido) */
+    .modal {
+      display: none; /* Inicialmente está oculto */
+      position: fixed;
+      z-index: 1; /* Se asegura que el modal esté por encima del contenido */
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro */
+      overflow: auto;
     }
-  </script>
+
+    /* Estilo para la imagen dentro del modal */
+    .modal-content {
+      margin: auto;
+      display: block;
+      max-width: 80%;
+      max-height: 80%;
+    }
+
+    /* Estilo para la "X" de cerrar */
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: white;
+      font-size: 30px;
+      font-weight: bold;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
   <header class="bg-white shadow-md p-6 flex justify-between items-center sticky top-0 z-10">
     <h1 class="text-2xl font-bold text-indigo-700">Galería Premium</h1>
-    <button onclick="logout()" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl font-semibold transition">Cerrar sesión</button>
+    <div class="relative">
+      <!-- Icono redondo de usuario -->
+      <button id="usuarioBtn" class="flex items-center justify-center w-10 h-10 bg-indigo-600 text-white rounded-full font-semibold hover:bg-indigo-700 transition">
+        <!-- Foto de perfil o inicial del nombre -->
+        <img id="imagenPerfil" src="" alt="Imagen de perfil" class="w-10 h-10 rounded-full object-cover hidden" />
+        <span id="usuarioInicial" class="hidden">U</span>
+      </button>
+      <div id="menuUsuario" class="hidden absolute right-0 mt-2 w-40 bg-white border rounded-xl shadow-md text-sm z-20">
+        <!-- Nombre más destacado -->
+        <p id="nombreUsuario" class="px-4 py-2 text-lg font-semibold text-indigo-700"></p>
+        <a href="perfil.html" class="block px-4 py-2 hover:bg-gray-100">Perfil</a>
+        <a href="informacion.html" class="block px-4 py-2 hover:bg-gray-100">Información</a>
+        <button onclick="logout()" class="w-full text-left px-4 py-2 text-red-500 hover:bg-gray-100">Cerrar sesión</button>
+      </div>
+    </div>
   </header>
 
   <main class="max-w-7xl mx-auto p-6">
@@ -30,23 +66,35 @@
       <h2 class="text-2xl font-semibold mb-4">📷 Fotos</h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         <div class="overflow-hidden rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300">
-          <img src="assets/foto1.jpg" alt="Foto 1" class="w-full h-60 object-cover">
+          <img src="assets/foto1.jpg" alt="Foto 1" class="w-full h-60 object-cover" onclick="openModal('assets/foto1.jpg')">
         </div>
         <div class="overflow-hidden rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300">
-          <img src="assets/foto2.jpg" alt="Foto 2" class="w-full h-60 object-cover">
+          <img src="assets/foto2.jpg" alt="Foto 2" class="w-full h-60 object-cover" onclick="openModal('assets/foto2.jpg')">
         </div>
         <div class="overflow-hidden rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300">
-          <img src="assets/foto3.jpg" alt="Foto 3" class="w-full h-60 object-cover">
+          <img src="assets/foto3.jpg" alt="Foto 3" class="w-full h-60 object-cover" onclick="openModal('assets/foto3.jpg')">
         </div>
         <div class="overflow-hidden rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300">
-            <img src="assets/foto4.jpg" alt="Foto 3" class="w-full h-60 object-cover">
-          </div>
-          <div class="overflow-hidden rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300">
-            <img src="assets/foto5.jpg" alt="Foto 3" class="w-full h-60 object-cover">
-          </div>
-          <div class="overflow-hidden rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300">
-            <img src="assets/foto6.jpg" alt="Foto 3" class="w-full h-60 object-cover">
-          </div>
+          <img src="assets/foto4.jpg" alt="Foto 4" class="w-full h-60 object-cover" onclick="openModal('assets/foto4.jpg')">
+        </div>
+        <div class="overflow-hidden rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300">
+          <img src="assets/foto5.jpg" alt="Foto 5" class="w-full h-60 object-cover" onclick="openModal('assets/foto5.jpg')">
+        </div>
+        <div class="overflow-hidden rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300">
+          <img src="assets/foto6.jpg" alt="Foto 6" class="w-full h-60 object-cover" onclick="openModal('assets/foto6.jpg')">
+        </div>
+        <div class="overflow-hidden rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300">
+          <img src="assets/foto7.jpg" alt="Foto 7" class="w-full h-60 object-cover" onclick="openModal('assets/foto7.jpg')">
+        </div>
+        <div class="overflow-hidden rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300">
+          <img src="assets/foto8.jpg" alt="Foto 8" class="w-full h-60 object-cover" onclick="openModal('assets/foto8.jpg')">
+        </div>
+        <div class="overflow-hidden rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300">
+          <img src="assets/foto9.jpg" alt="Foto 9" class="w-full h-60 object-cover" onclick="openModal('assets/foto9.jpg')">
+        </div>
+        <div class="overflow-hidden rounded-2xl shadow-lg hover:scale-105 transition-transform duration-300">
+          <img src="assets/foto10.jpg" alt="Foto 10" class="w-full h-60 object-cover" onclick="openModal('assets/foto10.jpg')">
+        </div>
       </div>
     </section>
 
@@ -59,20 +107,82 @@
             Tu navegador no soporta el video.
           </video>
         </div>
-        <div class="overflow-hidden rounded-2xl shadow-lg">
-          <video controls class="w-full h-64 object-cover">
-            <source src="assets/video2.mp4" type="video/mp4" />
-            Tu navegador no soporta el video.
-          </video>
-        </div>
-        <div class="overflow-hidden rounded-2xl shadow-lg">
-            <video controls class="w-full h-64 object-cover">
-              <source src="assets/video3.mp4" type="video/mp4" />
-              Tu navegador no soporta el video.
-            </video>
-          </div>
       </div>
     </section>
   </main>
+
+  <!-- Modal para ver la foto en tamaño grande -->
+  <div id="myModal" class="modal">
+    <span id="closeModal" class="close">&times;</span>
+    <img class="modal-content" id="modalImage">
+  </div>
+
+  <script>
+    window.onload = () => {
+      if (localStorage.getItem("autenticado") !== "true") {
+        alert("Acceso no autorizado.");
+        window.location.href = "index.html";
+      } else {
+        const nombre = localStorage.getItem("nombre") || "Usuario";
+        const inicial = nombre.charAt(0).toUpperCase();
+        
+        // Mostrar la inicial en el icono si no hay foto de perfil
+        document.getElementById("usuarioInicial").innerText = inicial;
+        // Mostrar el nombre completo en el menú desplegable con formato más grande
+        document.getElementById("nombreUsuario").innerText = nombre;
+
+        // Cargar y mostrar la foto de perfil, si existe
+        const fotoPerfil = localStorage.getItem("fotoPerfil");
+        if (fotoPerfil) {
+          document.getElementById("imagenPerfil").src = fotoPerfil;
+          document.getElementById("imagenPerfil").classList.remove("hidden");
+          document.getElementById("usuarioInicial").classList.add("hidden");
+        } else {
+          document.getElementById("usuarioInicial").classList.remove("hidden");
+        }
+      }
+
+      const usuarioBtn = document.getElementById("usuarioBtn");
+      const menuUsuario = document.getElementById("menuUsuario");
+
+      usuarioBtn.addEventListener("click", () => {
+        menuUsuario.classList.toggle("hidden");
+      });
+
+      document.addEventListener("click", function (e) {
+        if (!usuarioBtn.contains(e.target) && !menuUsuario.contains(e.target)) {
+          menuUsuario.classList.add("hidden");
+        }
+      });
+
+      // Cerrar el modal si el usuario hace clic fuera de la imagen
+      window.onclick = (event) => {
+        const modal = document.getElementById("myModal");
+        if (event.target === modal) {
+          modal.style.display = "none";
+        }
+      };
+    };
+
+    function openModal(imageSrc) {
+      // Mostrar el modal con la imagen correspondiente
+      const modal = document.getElementById("myModal");
+      const modalImage = document.getElementById("modalImage");
+      modal.style.display = "block";
+      modalImage.src = imageSrc;
+    }
+
+    function logout() {
+      localStorage.removeItem("autenticado");
+      localStorage.removeItem("nombre");
+      localStorage.removeItem("fotoPerfil");
+      window.location.href = "index.html";
+    }
+
+    // Cerrar el modal con el botón de "X"
+    document.getElementById("closeModal").onclick = () => {
+      document.getElementById("myModal").style.display = "none";
+    };
+  </script>
 </body>
 </html>

@@ -6,7 +6,6 @@
   <title>Acceso Premium</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
-    // Verifica si ya está logueado
     window.onload = () => {
       if (localStorage.getItem("autenticado") === "true") {
         window.location.href = "inicio.html";
@@ -15,12 +14,23 @@
 
     function verificarClave() {
       const clave = document.getElementById("clave").value;
+      const nombre = document.getElementById("nombre").value.trim();
+
       if (clave === "123") {
-        localStorage.setItem("autenticado", "true");
-        window.location.href = "inicio.html";
+        if (nombre !== "") {
+          localStorage.setItem("autenticado", "true");
+          localStorage.setItem("nombre", nombre);
+          window.location.href = "inicio.html";
+        } else {
+          mostrarMensaje("Por favor, ingresa tu nombre.");
+        }
       } else {
-        document.getElementById("mensaje").innerText = "Clave incorrecta.";
+        mostrarMensaje("Clave incorrecta.");
       }
+    }
+
+    function mostrarMensaje(texto) {
+      document.getElementById("mensaje").innerText = texto;
     }
   </script>
 </head>
@@ -30,8 +40,13 @@
       <h1 class="text-3xl font-bold text-indigo-700">Bienvenido</h1>
       <p class="text-gray-600">Accede al contenido exclusivo</p>
     </div>
+
+    <input id="nombre" type="text" placeholder="Ingresa tu nombre" class="w-full px-4 py-3 border rounded-xl text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+
     <input id="clave" type="password" placeholder="Ingresa la clave" class="w-full px-4 py-3 border rounded-xl text-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
+
     <div id="mensaje" class="text-sm text-red-500 text-center font-semibold"></div>
+
     <button onclick="verificarClave()" class="w-full py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 font-semibold text-lg transition">Entrar</button>
   </div>
 </body>
