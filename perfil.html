@@ -6,42 +6,48 @@
   <title>Mi Perfil</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 min-h-screen text-gray-800">
-  <header class="bg-white shadow-md p-6 flex justify-between items-center sticky top-0 z-10">
-    <h1 class="text-2xl font-bold text-indigo-700">Mi Perfil</h1>
-    <a href="inicio.html" class="bg-indigo-600 text-white px-4 py-2 rounded-xl font-semibold hover:bg-indigo-700 transition">Volver</a>
+<body class="bg-gray-50 min-h-screen text-gray-800 font-sans">
+  <!-- Header -->
+  <header class="bg-white shadow p-6 flex justify-between items-center sticky top-0 z-10">
+    <h1 class="text-3xl font-bold text-indigo-700">Mi Perfil</h1>
+    <a href="inicio.html" class="bg-indigo-600 text-white px-5 py-2 rounded-xl font-semibold hover:bg-indigo-700 transition">Volver</a>
   </header>
 
-  <main class="max-w-3xl mx-auto p-6 bg-white mt-8 rounded-3xl shadow-xl">
-    <h2 class="text-xl font-semibold mb-6 text-indigo-700">Editar Información Personal</h2>
+  <!-- Main content -->
+  <main class="max-w-3xl mx-auto mt-10 p-8 bg-white rounded-3xl shadow-lg">
+    <h2 class="text-2xl font-semibold mb-6 text-indigo-700">Editar Información Personal</h2>
 
-    <div class="space-y-4">
-      <div>
-        <label class="block font-medium">Nombre</label>
-        <input id="nombre" type="text" class="w-full px-4 py-2 border rounded-xl" />
+    <!-- Formulario -->
+    <div class="space-y-6">
+      <div class="grid gap-2">
+        <label for="nombre" class="text-sm font-medium text-gray-700">Nombre completo</label>
+        <input id="nombre" type="text" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
       </div>
-      <div>
-        <label class="block font-medium">Fecha de nacimiento</label>
-        <input id="fecha" type="date" class="w-full px-4 py-2 border rounded-xl" />
+      <div class="grid gap-2">
+        <label for="fecha" class="text-sm font-medium text-gray-700">Fecha de nacimiento</label>
+        <input id="fecha" type="date" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
       </div>
-      <div>
-        <label class="block font-medium">Correo electrónico</label>
-        <input id="correo" type="email" class="w-full px-4 py-2 border rounded-xl" />
+      <div class="grid gap-2">
+        <label for="correo" class="text-sm font-medium text-gray-700">Correo electrónico</label>
+        <input id="correo" type="email" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
       </div>
-      <div>
-        <label class="block font-medium">Biografía</label>
-        <textarea id="bio" rows="3" class="w-full px-4 py-2 border rounded-xl resize-none"></textarea>
+      <div class="grid gap-2">
+        <label for="bio" class="text-sm font-medium text-gray-700">Biografía</label>
+        <textarea id="bio" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-xl resize-none focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
       </div>
-      <div>
-        <label class="block font-medium">Foto de perfil</label>
-        <input id="foto" type="file" accept="image/*" class="w-full px-4 py-2 border rounded-xl" onchange="guardarFoto()" />
+      <div class="grid gap-2">
+        <label for="foto" class="text-sm font-medium text-gray-700">Foto de perfil</label>
+        <input id="foto" type="file" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded-xl" onchange="guardarFoto()" />
+        <div id="previewFoto" class="mt-4"></div>
       </div>
-      <button onclick="guardarPerfil()" class="bg-indigo-600 text-white px-6 py-2 rounded-xl hover:bg-indigo-700 font-semibold transition">Guardar</button>
+      <div class="text-right">
+        <button onclick="guardarPerfil()" class="bg-indigo-600 text-white px-6 py-2 rounded-xl hover:bg-indigo-700 font-semibold transition">Guardar cambios</button>
+      </div>
+      <div id="mensaje" class="text-center text-green-600 font-semibold hidden">¡Perfil actualizado correctamente!</div>
     </div>
-
-    <div id="mensaje" class="mt-4 text-green-600 font-semibold hidden">¡Perfil actualizado correctamente!</div>
   </main>
 
+  <!-- Script -->
   <script>
     window.onload = () => {
       if (localStorage.getItem("autenticado") !== "true") {
@@ -50,19 +56,15 @@
         return;
       }
 
-      // Rellenar campos con datos guardados si existen
+      // Cargar datos existentes
       document.getElementById("nombre").value = localStorage.getItem("nombre") || "";
       document.getElementById("fecha").value = localStorage.getItem("fecha") || "";
       document.getElementById("correo").value = localStorage.getItem("correo") || "";
       document.getElementById("bio").value = localStorage.getItem("bio") || "";
 
-      // Mostrar foto de perfil si existe
       const fotoPerfil = localStorage.getItem("fotoPerfil");
       if (fotoPerfil) {
-        const img = document.createElement("img");
-        img.src = fotoPerfil;
-        img.classList.add("w-24", "h-24", "rounded-full");
-        document.getElementById("foto").after(img);
+        mostrarFoto(fotoPerfil);
       }
     };
 
@@ -71,10 +73,21 @@
       if (archivo) {
         const lector = new FileReader();
         lector.onload = function (e) {
-          localStorage.setItem("fotoPerfil", e.target.result);
+          const dataUrl = e.target.result;
+          localStorage.setItem("fotoPerfil", dataUrl);
+          mostrarFoto(dataUrl);
         };
         lector.readAsDataURL(archivo);
       }
+    }
+
+    function mostrarFoto(src) {
+      const contenedor = document.getElementById("previewFoto");
+      contenedor.innerHTML = "";
+      const img = document.createElement("img");
+      img.src = src;
+      img.className = "w-24 h-24 rounded-full border-4 border-indigo-500 shadow-md";
+      contenedor.appendChild(img);
     }
 
     function guardarPerfil() {
