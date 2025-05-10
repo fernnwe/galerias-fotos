@@ -6,44 +6,44 @@
   <title>Mi Perfil</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50 min-h-screen text-gray-800 font-sans">
+<body class="bg-gray-900 min-h-screen text-gray-300 font-sans">
   <!-- Header -->
-  <header class="bg-white shadow p-6 flex justify-between items-center sticky top-0 z-10">
-    <h1 class="text-3xl font-bold text-indigo-700">Mi Perfil</h1>
+  <header class="bg-gray-800 shadow p-6 flex justify-between items-center sticky top-0 z-10">
+    <h1 class="text-3xl font-bold text-indigo-400">Mi Perfil</h1>
     <a href="inicio.html" class="bg-indigo-600 text-white px-5 py-2 rounded-xl font-semibold hover:bg-indigo-700 transition">Volver</a>
   </header>
 
   <!-- Main content -->
-  <main class="max-w-3xl mx-auto mt-10 p-8 bg-white rounded-3xl shadow-lg">
-    <h2 class="text-2xl font-semibold mb-6 text-indigo-700">Editar Información Personal</h2>
+  <main class="max-w-3xl mx-auto mt-10 p-8 bg-gray-800 rounded-3xl shadow-lg">
+    <h2 class="text-2xl font-semibold mb-6 text-indigo-400">Editar Información Personal</h2>
 
     <!-- Formulario -->
     <div class="space-y-6">
       <div class="grid gap-2">
-        <label for="nombre" class="text-sm font-medium text-gray-700">Nombre completo</label>
-        <input id="nombre" type="text" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+        <label for="nombre" class="text-sm font-medium text-gray-300">Nombre completo</label>
+        <input id="nombre" type="text" class="w-full px-4 py-3 border border-gray-600 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-gray-700 text-gray-300" />
       </div>
       <div class="grid gap-2">
-        <label for="fecha" class="text-sm font-medium text-gray-700">Fecha de nacimiento</label>
-        <input id="fecha" type="date" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+        <label for="fecha" class="text-sm font-medium text-gray-300">Fecha de nacimiento</label>
+        <input id="fecha" type="date" class="w-full px-4 py-3 border border-gray-600 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-gray-700 text-gray-300" />
       </div>
       <div class="grid gap-2">
-        <label for="correo" class="text-sm font-medium text-gray-700">Correo electrónico</label>
-        <input id="correo" type="email" class="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none" />
+        <label for="correo" class="text-sm font-medium text-gray-300">Correo electrónico</label>
+        <input id="correo" type="email" class="w-full px-4 py-3 border border-gray-600 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-gray-700 text-gray-300" />
       </div>
       <div class="grid gap-2">
-        <label for="bio" class="text-sm font-medium text-gray-700">Biografía</label>
-        <textarea id="bio" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-xl resize-none focus:ring-2 focus:ring-indigo-500 focus:outline-none"></textarea>
+        <label for="bio" class="text-sm font-medium text-gray-300">Biografía</label>
+        <textarea id="bio" rows="4" class="w-full px-4 py-3 border border-gray-600 rounded-xl resize-none focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-gray-700 text-gray-300"></textarea>
       </div>
       <div class="grid gap-2">
-        <label for="foto" class="text-sm font-medium text-gray-700">Foto de perfil</label>
-        <input id="foto" type="file" accept="image/*" class="w-full px-4 py-2 border border-gray-300 rounded-xl" onchange="guardarFoto()" />
+        <label for="foto" class="text-sm font-medium text-gray-300">Foto de perfil</label>
+        <input id="foto" type="file" accept="image/*" class="w-full px-4 py-2 border border-gray-600 rounded-xl bg-gray-700 text-gray-300" onchange="guardarFoto()" />
         <div id="previewFoto" class="mt-4"></div>
       </div>
       <div class="text-right">
         <button onclick="guardarPerfil()" class="bg-indigo-600 text-white px-6 py-2 rounded-xl hover:bg-indigo-700 font-semibold transition">Guardar cambios</button>
       </div>
-      <div id="mensaje" class="text-center text-green-600 font-semibold hidden">¡Perfil actualizado correctamente!</div>
+      <div id="mensaje" class="text-center text-green-400 font-semibold hidden">¡Perfil actualizado correctamente!</div>
     </div>
   </main>
 
